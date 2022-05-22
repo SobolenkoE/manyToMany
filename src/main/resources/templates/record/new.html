@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>новая запись</title>
+</head>
+<body>
+    <form th:method="POST" th:action="@{/record/all}" th:object="${record}" th:formmethod="POST">
+        <label for="name">Имя:</label>
+        <input type="text" th:field="*{name}" id="name">
+        <div style="color:darkred" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" >empty</div>
+        <label for="phone">Номер телефона:</label>
+        <input type="text" th:field="*{phone}"  id="phone">
+        <div style="color:darkred" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" >empty</div>
+        <label for="email">email:</label>
+        <input type="text" th:field="*{email}"  id="email">
+        <div style="color:darkred" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" >empty</div>
+        <input type="submit" value="Создать">
+    </form>
+</body>
+</html>

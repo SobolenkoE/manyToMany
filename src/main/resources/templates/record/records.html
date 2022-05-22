@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Все записи</title>
+</head>
+<body>
+    <div>
+        <a href="/record/new">создать новую  запись</a>
+    </div>
+    <div th:each = "record:${records}">
+        <div> Имя:</div>
+            <a th:text="${record.name}", th:href="@{/record/{id}(id=${record.id})}"></a>
+            <div> Номер:</div>
+            <div th:text="${record.phone}"></div>
+            <div> Состоит в группе:</div>
+            <div th:each ="item:${record.group}">
+            <div th:text = "${item.name}"></div>
+        </div>
+    </div>
+</body>
+</html>

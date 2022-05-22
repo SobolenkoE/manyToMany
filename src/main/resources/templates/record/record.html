@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div> Имя:</div>
+    <div th:text="${record.name}"></div>
+    <div> Номер:</div>
+    <div th:text="${record.phone}"></div>
+    <div> email:</div>
+    <div th:text="${record.email}"></div>
+    <div> Состоит в группе:</div>
+    <div th:each ="item:${record.group}">
+        <div th:text = "${item.name}"></div>
+    </div>
+    <a th:href="@{/record/{id}/edit(id=${record.id})}">редактировать</a>
+    <form th:method="DELETE" th:action="@{/record/{id}(id=${record.id})}">
+<!--        <a href="/record/all" type="submit">удалить</a>-->
+        <input value="удалить" type="submit">
+    </form>
+</body>
+</html>

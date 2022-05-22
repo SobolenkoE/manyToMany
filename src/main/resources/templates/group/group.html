@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div> Имя:</div>
+    <div th:text="${group.name}"></div>
+
+
+    <a th:href="@{/group/{id}/edit(id=${group.id})}">редактировать</a>
+    <form th:method="DELETE" th:action="@{/group/{id}(id=${group.id})}">
+<!--        <a href="/record/all" type="submit">удалить</a>-->
+        <input value="удалить" type="submit">
+    </form>
+</body>
+</html>

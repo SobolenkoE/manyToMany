@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>редактировать</title>
+</head>
+<body>
+    <form th:method="PATCH" th:action="@{/group/{id}(id=${group.id})}" th:object="${group}">
+        <label for="name">Имя:</label>
+        <input type="text" th:field="*{name}" id="name">
+        <div style="color:darkred" th:if="${#fields.hasErrors('name')}" th:errors="*{name}" >empty</div>
+        <input type="submit" value="Обновить">
+    </form>
+</body>
+</html>
