@@ -8,6 +8,10 @@
     <div> Имя:</div>
     <div th:text="${group.name}"></div>
 
+    <div th:each ="item:${group.records}">
+        <div th:text = "${item.name}"></div>
+    </div>
+
 
     <a th:href="@{/group/{id}/edit(id=${group.id})}">редактировать</a>
     <form th:method="DELETE" th:action="@{/group/{id}(id=${group.id})}">

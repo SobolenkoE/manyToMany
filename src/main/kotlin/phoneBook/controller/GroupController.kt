@@ -11,7 +11,9 @@ import org.springframework.web.servlet.ModelAndView
 import org.thymeleaf.TemplateEngine
 import org.thymeleaf.context.Context
 import phoneBook.entity.PhoneGroupEntity
+import phoneBook.entity.PhoneRecordEntity
 import phoneBook.repo.GroupRepo
+import phoneBook.repo.RecordRepo
 
 import phoneBook.servise.GroupService
 
@@ -24,7 +26,8 @@ import javax.validation.Valid
 class GroupController(
     @Autowired
     private val groupService: GroupService,
-    private val groupRepo: GroupRepo
+    private val groupRepo: GroupRepo,
+    private val recordRepo: RecordRepo
 ) {
 
     @GetMapping("/{id}")
@@ -55,6 +58,15 @@ class GroupController(
     @GetMapping("/new")
     fun creategroup(@ModelAttribute ("group") groupEntity: PhoneGroupEntity):String{
         return "group/new"
+    }
+
+    @GetMapping("/add")
+    fun addRecordToGroup(): String{
+        val groupEntity =groupRepo.getById(1)
+        val recordEntity =recordRepo.getById(19)
+        groupEntity.records?.add(recordEntity)
+        groupRepo.save(groupEntity)
+        return "успех"
     }
 
 

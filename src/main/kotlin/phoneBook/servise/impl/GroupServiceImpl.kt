@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import phoneBook.entity.PhoneGroupEntity
 import phoneBook.repo.GroupRepo
+import phoneBook.repo.RecordRepo
 import phoneBook.servise.GroupService
 
 @Service
 class GroupServiceImpl (
     @Autowired
-    private val groupRepo: GroupRepo):GroupService {
+    private val groupRepo: GroupRepo,
+    private val recordRepo: RecordRepo):GroupService {
     override fun getById(int: Int): PhoneGroupEntity {
         return groupRepo.getById(int)
     }
@@ -33,6 +35,9 @@ class GroupServiceImpl (
 //        return GroupEntity.id
 //    }
 //
+
+
+
     @Transactional
     override fun update(id: Int, GroupEntity: PhoneGroupEntity) {
         val existingGroup = groupRepo.getById(id)
@@ -44,7 +49,23 @@ class GroupServiceImpl (
 //        GroupRepository.deleteAllByGroup(existingGroup)
 //        GroupRepository.saveAll(Groups)
     }
-//
+    @Transactional
+    override fun addInner(groupId: Int, recordId: Int) {
+        val groupEntity=groupRepo.getById(groupId)
+        val recordEntity =recordRepo.getById(recordId)
+        groupEntity.records?.add(recordEntity)
+        groupRepo.save(groupEntity)
+    }
+
+
+    @Transactional
+    override fun deleteInner(groupId: Int, recordId: Int) {
+        val groupEntity=groupRepo.getById(groupId)
+        val recordEntity =recordRepo.getById(recordId)
+        groupEntity.records?.add(recordEntity)
+        groupRepo.save(groupEntity)
+    }
+    //
     @Transactional
     override fun delete(id: Int) {
 //        val existingGroup = GroupRepo.findByIdOrNull(id)

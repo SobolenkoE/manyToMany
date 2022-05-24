@@ -16,8 +16,10 @@
         <input type="text" th:field="*{email}"  id="email">
         <div style="color:darkred" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" >empty</div>
 
-        <input type="text" th:field="*{group}"  id="group">
-        <div style="color:darkred" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" >empty</div>
+        <select name="group" id="1">
+            <option th:each="group:${groups}"  th:value="${group.id}" th:text="${group.name}"></option>
+        </select>
+
         <input type="submit" value="Обновить">
     </form>
 </body>

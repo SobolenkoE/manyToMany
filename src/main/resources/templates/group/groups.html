@@ -10,8 +10,9 @@
     </div>
     <div th:each = "group:${groups}">
         <div> Имя:</div>
-            <a th:text="${group.name}", th:href="@{/group/{id}(id=${group.id})}"></a>
+            <a th:text="${group.name}" th:href="@{/group/{id}(id=${group.id})}"></a>
+            <div th:text="${group.records.size()}" ></div>
+            <div> элементов в группе</div>
         </div>
-    </div>
 </body>
 </html>

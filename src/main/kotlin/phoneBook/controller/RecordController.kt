@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView
 import org.thymeleaf.TemplateEngine
 import org.thymeleaf.context.Context
 import phoneBook.entity.PhoneRecordEntity
+import phoneBook.repo.GroupRepo
 import phoneBook.repo.RecordRepo
 import phoneBook.servise.RecordService
 import java.io.StringWriter
@@ -22,7 +23,8 @@ import javax.validation.Valid
 class RecordController(
     @Autowired
     private val recordService: RecordService,
-    private val recordRepo: RecordRepo
+    private val recordRepo: RecordRepo,
+    private val groupRepo: GroupRepo
 ) {
 
     @GetMapping("/{id}")
@@ -51,17 +53,25 @@ class RecordController(
     }
 
     @GetMapping("/new")
-    fun createRecord(@ModelAttribute ("record") recordEntity: PhoneRecordEntity):String{
+    fun createRecord(@ModelAttribute ("record") recordEntity: PhoneRecordEntity,
+                     model: Model):String{
+        val groups=groupRepo.getAllByOrderByName()
+        for (group in groups){
+            println(group.name)
+        }
+        model.addAttribute("groups",groups)
         return "record/new"
     }
 
 
     @PostMapping("/all")
     fun create(@ModelAttribute ("record") @Valid recordEntity: PhoneRecordEntity,
+               @ModelAttribute ("group") groupId: Int,
                bindingResult: BindingResult):String {
         println("получили пост запрос")
         if (bindingResult.hasErrors())
             return ("record/new")
+        recordEntity.group?.add(groupRepo.getById(groupId))
         recordRepo.save(recordEntity)
         return "redirect:/record/all"
     }
@@ -69,6 +79,7 @@ class RecordController(
     @GetMapping("/{id}/edit")
     fun createRecord(@PathVariable id: Int,model:Model):String{
         model.addAttribute("record", recordService.getById(id))
+        model.addAttribute("groups", groupRepo.getAllByOrderByName())
         return "record/edit"
     }
 
@@ -76,11 +87,11 @@ class RecordController(
     @PatchMapping("/{id}")
     fun edit(@PathVariable id: Int,
              @ModelAttribute("record") @Valid recordEntity: PhoneRecordEntity,
+             @ModelAttribute("group") idGroup: Int,
              bindingResult: BindingResult):String {
-        println("получили патч запрос")
         if (bindingResult.hasErrors())
             return "record/edit"
-
+        recordEntity.group?.add(groupRepo.getById(idGroup))
         recordService.update(id,recordEntity)
         return "redirect:/record/${id}"
     }

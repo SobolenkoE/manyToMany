@@ -41,6 +41,7 @@ class RecordServiceImpl (
         existingRecord.name = recordEntity.name
         existingRecord.phone = recordEntity.phone
         existingRecord.email=recordEntity.email
+        existingRecord.group=recordEntity.group
 //
         recordRepo.save(existingRecord)
 //        val records = dto.persons.map { it.toEntity(existingGroup) }
